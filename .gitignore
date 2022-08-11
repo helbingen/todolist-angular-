@@ -1,0 +1,9 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+#backend
+/backend/node_modules
+
+#frontend
+/frontend/todo-list/.angular
+/frontend/todo-list/.vscode
+/frontend/todo-list/node_modules

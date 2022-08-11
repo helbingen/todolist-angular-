@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white">To Do List</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarNav">
+      <ul class="navbar-nav float-end">
+        <!-- <li class="nav-item" *ngIf="logado">
+          <a class="nav-link text-white">Logado com: {{ email }}</a>
+        </li>
+        <li class="nav-item" *ngIf="!logado">
+          <a class="nav-link text-white" routerLink="/login">Login</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link text-white" (click)="Logout()">Sair</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

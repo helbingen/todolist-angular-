@@ -1,0 +1,47 @@
+### Create
+POST http://localhost:3001/ToDoList
+Content-Type: application/json
+
+{
+  "descricao": "Descrição teste",
+  "concluido": false,  
+  "dataConclusao": null
+}
+
+### FindAll
+
+GET http://localhost:3001/todolist
+
+### FindAll orderby
+
+GET http://localhost:3001/todolist/atividades
+
+### FindOne
+
+GET http://localhost:3001/todolist/17
+
+
+### Update
+
+PUT http://localhost:3001/todolist/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "descricao": "Descrição real",
+  "concluido": false,  
+  "dataConclusao": null
+}
+
+### Delete
+DELETE http://localhost:3001/todolist/1
+
+### Criar Usuário
+
+POST http://localhost:3001/create-user
+Content-Type: application/json
+
+{
+  "email": "danielhelb@hotmail.com",
+  "senha": "senhaqualquer"
+}

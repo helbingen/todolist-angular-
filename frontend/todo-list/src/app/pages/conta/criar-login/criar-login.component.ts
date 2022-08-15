@@ -1,6 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
-import { AlertModalService } from './../../atividades/shared/alert-modal.service';
-import { AccountService } from './../../atividades/shared/account.service';
+import { AlertModalService } from '../../../shared/services/global/alert-modal.service';
+import { AccountService } from '../../../shared/services/http/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -18,8 +17,7 @@ export default class CriarLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: AccountService,
     private alertModalService: AlertModalService,
-    private location: Location,
-    private route: ActivatedRoute
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +33,7 @@ export default class CriarLoginComponent implements OnInit {
     });
   }
 
-  Login() {
+  CriarLogin(): void {
     let email = this.formulario.controls['email'].value;
     let senha = this.formulario.controls['senha'].value;
 

@@ -1,9 +1,9 @@
-export interface Usuario {
+export interface IUsuario {
   email: string;
   senha: string;
   logado: boolean;
 }
 
-export interface UsuarioLogado {
+export interface IUsuarioLogado {
   logado: boolean;
 }

@@ -1,22 +1,22 @@
-import { AccountService } from './../shared/account.service';
+import { AccountService } from 'src/app/shared/services/http/account.service';
+import { AlertModalService } from 'src/app/shared/services/global/alert-modal.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Atividade } from 'src/app/atividade';
-import { AlertModalService } from '../shared/alert-modal.service';
-import { TodolistService } from '../shared/todolist.service';
+import { IAtividade } from 'src/app/shared/models/interfaces/atividade';
+import { TodolistService } from 'src/app/shared/services/http/todolist.service';
 
 @Component({
-  selector: 'app-listar-atividades-abertas',
-  templateUrl: './listar-atividades-abertas.component.html',
-  styleUrls: ['./listar-atividades-abertas.component.css'],
+  selector: 'app-listar-atividades',
+  templateUrl: './listar-atividades.component.html',
+  styleUrls: ['./listar-atividades.component.css'],
 })
-export class ListarAtividadesAbertasComponent implements OnInit {
+export class ListarAtividadesComponent implements OnInit {
   deleteModalRef!: BsModalRef;
-  atividades$!: Observable<Atividade[]>;
+  atividades$!: Observable<IAtividade[]>;
   atividade: Object = {};
-  atividadeSelecionada!: Atividade;
+  atividadeSelecionada!: IAtividade;
 
   @ViewChild('deleteModal') deleteModal: any;
 
@@ -32,18 +32,18 @@ export class ListarAtividadesAbertasComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.selectUsuarioLogado().subscribe((dados) => {
       let userId = Object.values(dados)[0];
-      this.atividades$ = this.service.listar(userId);
+      this.atividades$ = this.service.listarAtividadesConcluidas(userId);
     });
   }
 
-  onDelete(atividade: Atividade) {
-    this.atividadeSelecionada = atividade;
+  onDelete(pAtividade: IAtividade): void {
+    this.atividadeSelecionada = pAtividade;
     this.deleteModalRef = this.modalService.show(this.deleteModal, {
       class: 'modal-sm',
     });
   }
 
-  onConfirmDelete() {
+  onConfirmDelete(): void {
     this.service.remove(this.atividadeSelecionada.id).subscribe(
       (sucess) => {
         this.deleteModalRef.hide();
@@ -57,29 +57,29 @@ export class ListarAtividadesAbertasComponent implements OnInit {
       }
     );
   }
-  onDeclineDelete() {
+  onDeclineDelete(): void {
     this.deleteModalRef.hide();
   }
 
-  onUpdate(id: number) {
-    this.router.navigate(['edit', id]), { relativeTo: this.route };
+  onUpdate(pId: number): void {
+    this.router.navigate(['edit', pId]), { relativeTo: this.route };
   }
 
-  handleError() {
+  handleError(): void {
     this.alertService.showAlertDanger(
       'Erro ao carregar atividades. Tente novamente mais tarde.'
     );
   }
 
-  onConcluir(id: number) {
+  onConcluir(pId: number): void {
     let dataatual = Date.now();
     let body = { dataConclusao: new Date(dataatual), concluido: true };
-    this.atividade = this.service.update(id, body).subscribe();
-    this.router.navigate(['/atividades']);
+    this.atividade = this.service.concluirAtividade(pId, body).subscribe();
   }
 
-  onAbrir(id: number) {
+  onAbrir(pId: number): void {
     let body = { dataConclusao: null, concluido: false };
-    this.atividade = this.service.update(id, body).subscribe();
+    this.atividade = this.service.concluirAtividade(pId, body).subscribe();
+    this.router.navigate(['/atividades/abertas']);
   }
 }

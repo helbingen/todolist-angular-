@@ -1,4 +1,4 @@
-export interface Atividade {
+export interface IAtividade {
   id: number;
   atividade: string;
   concluido: boolean;
@@ -7,18 +7,18 @@ export interface Atividade {
   userId: number;
 }
 
-export interface AtividadeCreate {
+export interface IAtividadeCreate {
   atividade: string;
   concluido: boolean;
   dataConclusao: Date;
   userId: number;
 }
 
-export interface AtividadeUpdate {
+export interface IAtividadeUpdate {
   concluido: boolean;
   dataConclusao: Date | null;
 }
 
-export interface Update {
+export interface IUpdate {
   atividade: string;
 }

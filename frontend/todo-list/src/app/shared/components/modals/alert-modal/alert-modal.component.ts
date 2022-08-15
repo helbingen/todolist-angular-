@@ -12,9 +12,9 @@ export class AlertModalComponent implements OnInit {
 
   constructor(public bsModalRef: BsModalRef) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  onClose() {
+  onClose(): void {
     this.bsModalRef.hide();
   }
 }

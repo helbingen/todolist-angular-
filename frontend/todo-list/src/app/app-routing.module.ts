@@ -1,10 +1,10 @@
-import CriarLoginComponent from './conta/criar-login/criar-login.component';
-import { ListarAtividadesAbertasComponent } from './atividades/listar-atividades-abertas/listar-atividades-abertas.component';
-import { AtividadesFormComponent } from './atividades/atividades-form/atividades-form';
+import CriarLoginComponent from './pages/conta/criar-login/criar-login.component';
+import { ListarAtividadesAbertasComponent } from './pages/atividades/listar-atividades-abertas/listar-atividades-abertas.component';
+import { AtividadesFormComponent } from './pages/atividades/atividades-form/atividades-form';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './conta/login/login.component';
-import { ListarAtividadesComponent } from './atividades/listar-atividades/listar-atividades.component';
+import { LoginComponent } from './pages/conta/login/login.component';
+import { ListarAtividadesComponent } from './pages/atividades/listar-atividades/listar-atividades.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },

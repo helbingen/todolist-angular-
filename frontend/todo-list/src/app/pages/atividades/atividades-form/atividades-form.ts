@@ -1,11 +1,11 @@
-import { AccountService } from './../shared/account.service';
-import { AlertModalService } from './../shared/alert-modal.service';
+import { AccountService } from 'src/app/shared/services/http/account.service';
+import { AlertModalService } from 'src/app/shared/services/global/alert-modal.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TodolistService } from '../shared/todolist.service';
+import { TodolistService } from 'src/app/shared/services/http/todolist.service';
 import { Location } from '@angular/common';
-import { Atividade } from 'src/app/atividade';
+import { IAtividade } from 'src/app/shared/models/interfaces/atividade';
 
 @Component({
   selector: 'app-atividades-form',
@@ -16,7 +16,7 @@ export class AtividadesFormComponent implements OnInit {
   formulario!: FormGroup | any;
   submitted = false;
   atividade: Object = {};
-  atividadeSelecionada!: Atividade;
+  atividadeSelecionada!: IAtividade;
   public id = undefined;
 
   constructor(
@@ -37,23 +37,23 @@ export class AtividadesFormComponent implements OnInit {
     });
   }
 
-  validacaoForm(campo: string) {
+  validacaoForm(pCampo: string): string {
     if (
-      this.formulario.get(campo).invalid &&
-      this.formulario.get(campo).touched
+      this.formulario.get(pCampo).invalid &&
+      this.formulario.get(pCampo).touched
     ) {
       return 'is-invalid';
     }
     return '';
   }
 
-  onCancel() {
+  onCancel(): void {
     this.submitted = false;
     this.formulario.reset();
     this.location.back();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     let atividade = this.formulario.controls['atividade'].value;
 
     if (this.id !== undefined) {
@@ -61,7 +61,7 @@ export class AtividadesFormComponent implements OnInit {
         atividade,
       };
       console.log(body);
-      this.atividade = this.service.update2(this.id, body).subscribe(
+      this.atividade = this.service.editarAtividade(this.id, body).subscribe(
         (success) => {
           this.alertService.showAlertSuccess('Atividade editada com sucesso!');
           this.location.back();

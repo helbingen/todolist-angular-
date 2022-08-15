@@ -1,6 +1,6 @@
-import { AlertModalService } from './../../atividades/shared/alert-modal.service';
-import { AccountService } from './../../atividades/shared/account.service';
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { AlertModalService } from '../../../shared/services/global/alert-modal.service';
+import { AccountService } from '../../../shared/services/http/account.service';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -21,8 +21,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.loginService.selectUsuarioLogado(this.usuario);
-
     this.formulario = this.formBuilder.group({
       email: [
         null,
@@ -35,7 +33,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
+  login(): void {
     let usuario = {
       email: this.formulario.controls['email'].value,
       senha: this.formulario.controls['senha'].value,
@@ -53,9 +51,7 @@ export class LoginComponent implements OnInit {
           .validacaoSenhaCrypto(usuario.senha)
           .subscribe((senha) => {
             if (email === usuario.email && senha === senhaBd) {
-              this.loginService
-                .usuarioLogado(usuario.email, usuarioLogado)
-                .subscribe();
+              this.loginService.login(usuario.email, usuarioLogado).subscribe();
               this.router.navigate(['atividades/abertas']);
             } else {
               this.alertModalService.showAlertDanger(

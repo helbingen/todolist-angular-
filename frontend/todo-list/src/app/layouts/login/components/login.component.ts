@@ -1,4 +1,4 @@
-import { AlertModalService } from '../../../shared/services/global/alert-modal.service';
+import { AlertModalService } from 'src/app/shared/components/modals/alert-modal/alert-modal.service';
 import { AccountService } from '../../../shared/services/http/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(): void {
+  login() {
     let usuario = {
       email: this.formulario.controls['email'].value,
       senha: this.formulario.controls['senha'].value,
@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit {
     this.loginService.loginExiste(usuario).subscribe(
       (users) => {
         let email = Object.values(users)[1];
-        let senhaBd = Object.values(users)[2];
+        let senhaBd: string = Object.values(users)[2];
+        console.log(typeof usuario.senha);
         this.loginService
           .validacaoSenhaCrypto(usuario.senha)
           .subscribe((senha) => {

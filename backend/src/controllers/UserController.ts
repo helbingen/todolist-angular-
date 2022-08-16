@@ -10,6 +10,7 @@ function criptografar(senha: string) {
 class UserController {
   async validarSenhaFrontend(req: Request, res: Response) {
     const { senha } = req.body;
+    console.log(typeof senha);
     const secret = "Hi";
     const hash = crypto
       .createHash("sha256", secret)

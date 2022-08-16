@@ -1,11 +1,13 @@
+<app-navbar></app-navbar>
+
 <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" routerLink="abertas">Atividades em aberto</a>
+        <a class="nav-link" routerLink="../abertas">Atividades em aberto</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" routerLink="concluidas"
+        <a class="nav-link active" routerLink="./concluidas"
           >Atividades Concluídas</a
         >
       </li>
@@ -52,17 +54,8 @@
               </button>
               {{ "" }}
               <button
-                class="btn btn-outline-success mb-1 btn-sm"
-                (click)="onConcluir(atividade.id)"
-                *ngIf="!atividade.concluido"
-              >
-                Concluir atividade
-              </button>
-              {{ "" }}
-              <button
                 class="btn btn-outline-danger mb-1 btn-sm"
                 (click)="onAbrir(atividade.id)"
-                *ngIf="atividade.concluido"
               >
                 Voltar atividade
               </button>

@@ -1,5 +1,5 @@
 import { AccountService } from 'src/app/shared/services/http/account.service';
-import { AlertModalService } from 'src/app/shared/services/global/alert-modal.service';
+import { AlertModalService } from 'src/app/shared/components/modals/alert-modal/alert-modal.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -71,15 +71,9 @@ export class ListarAtividadesComponent implements OnInit {
     );
   }
 
-  onConcluir(pId: number): void {
-    let dataatual = Date.now();
-    let body = { dataConclusao: new Date(dataatual), concluido: true };
-    this.atividade = this.service.concluirAtividade(pId, body).subscribe();
-  }
-
   onAbrir(pId: number): void {
     let body = { dataConclusao: null, concluido: false };
     this.atividade = this.service.concluirAtividade(pId, body).subscribe();
-    this.router.navigate(['/atividades/abertas']);
+    this.router.navigate(['atividades/abertas']);
   }
 }

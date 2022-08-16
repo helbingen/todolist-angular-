@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { IAtividade } from 'src/app/shared/models/interfaces/atividade';
-import { AlertModalService } from 'src/app/shared/services/global/alert-modal.service';
+import { AlertModalService } from 'src/app/shared/components/modals/alert-modal/alert-modal.service';
 import { TodolistService } from 'src/app/shared/services/http/todolist.service';
 
 @Component({
@@ -75,11 +75,6 @@ export class ListarAtividadesAbertasComponent implements OnInit {
     let dataatual = Date.now();
     let body = { dataConclusao: new Date(dataatual), concluido: true };
     this.atividade = this.service.concluirAtividade(pId, body).subscribe();
-    this.router.navigate(['/atividades']);
-  }
-
-  onAbrir(pId: number): void {
-    let body = { dataConclusao: null, concluido: false };
-    this.atividade = this.service.concluirAtividade(pId, body).subscribe();
+    this.router.navigate(['/atividades/concluidas']);
   }
 }

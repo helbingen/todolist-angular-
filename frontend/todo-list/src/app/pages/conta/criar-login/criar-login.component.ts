@@ -1,4 +1,4 @@
-import { AlertModalService } from '../../../shared/services/global/alert-modal.service';
+import { AlertModalService } from '../../../shared/components/modals/alert-modal/alert-modal.service';
 import { AccountService } from '../../../shared/services/http/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,7 +33,7 @@ export default class CriarLoginComponent implements OnInit {
     });
   }
 
-  CriarLogin(): void {
+  criarLogin(): void {
     let email = this.formulario.controls['email'].value;
     let senha = this.formulario.controls['senha'].value;
 

@@ -30,17 +30,17 @@ export class AccountService {
   //     .pipe(take(1));
   // }
 
-  loginExiste(pUsuario: IUsuario): Observable<Object> {
+  loginExiste(pUsuario: IUsuario) {
     return this.http
       .get(`${environment.API_URL}login?email=${pUsuario.email}`)
       .pipe(take(1));
   }
 
-  validacaoSenhaCrypto(pSenha: string): Observable<string> {
+  validacaoSenhaCrypto(pSenha: string) {
     return this.http
-      .put<string>(
+      .put(
         `${environment.API_URL}login-validate`,
-        { pSenha },
+        { senha: pSenha },
         { headers: this.header }
       )
       .pipe(take(1));

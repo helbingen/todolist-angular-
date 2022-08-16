@@ -1,5 +1,5 @@
 import { AccountService } from 'src/app/shared/services/http/account.service';
-import { AlertModalService } from 'src/app/shared/services/global/alert-modal.service';
+import { AlertModalService } from 'src/app/shared/components/modals/alert-modal/alert-modal.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

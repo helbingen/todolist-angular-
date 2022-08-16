@@ -1,9 +1,8 @@
-import { AlertModalService } from './shared/services/global/alert-modal.service';
+import { AlertModalService } from './shared/components/modals/alert-modal/alert-modal.service';
 import { AccountService } from './shared/services/http/account.service';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { IUsuario } from './shared/models/interfaces/usuario';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',

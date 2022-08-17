@@ -1,8 +1,5 @@
-import { ListarAtividadesAbertasComponent } from './pages/atividades/listar-atividades-abertas/listar-atividades-abertas.component';
-import { AtividadesFormComponent } from './pages/atividades/atividades-form/atividades-form';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListarAtividadesComponent } from './pages/atividades/listar-atividades/listar-atividades.component';
 
 const routes: Routes = [
   {
@@ -13,7 +10,7 @@ const routes: Routes = [
   {
     path: 'atividades',
     loadChildren: () =>
-      import('../app/layouts/app/atividades/atividades.module').then(
+      import('../app/layouts/atividades/atividades.module').then(
         (m) => m.AtividadesModule
       ),
   },

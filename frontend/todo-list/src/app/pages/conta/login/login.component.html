@@ -1,5 +1,5 @@
-<h2 class="text-center">Criar minha conta</h2>
-
+<!-- <div class="col-md-4 offset-md-4"> -->
+<h2 class="text-center">Login</h2>
 <form class="form-login" [formGroup]="formulario">
   <label for="email" class="form-label">Email</label>
   <input
@@ -38,9 +38,18 @@
       type="submit"
       class="btn btn-primary"
       [disabled]="formulario.invalid"
-      (click)="criarLogin()"
+      (click)="login()"
+    >
+      Login
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="margin-left: 10px"
+      routerLink="./criar"
     >
       Criar Conta
     </button>
   </div>
 </form>
+<!-- </div> -->

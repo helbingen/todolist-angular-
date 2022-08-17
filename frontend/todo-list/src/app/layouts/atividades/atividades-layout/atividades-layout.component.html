@@ -12,10 +12,21 @@
     <div id="navbarNav">
       <ul class="navbar-nav float-end">
         <li class="nav-item">
-          <a class="nav-link text-white" (click)="Logout()">Sair</a>
+          <a class="nav-link text-white" (click)="logout()">Sair</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<div class="card-header">
+  <ul class="nav nav-tabs card-header-tabs">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="./abertas">Atividades em aberto</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="./concluidas">Atividades Concluídas</a>
+    </li>
+  </ul>
+</div>
 <router-outlet></router-outlet>

@@ -1,8 +1,7 @@
-// import { ListModel } from "./ListModel";
-import { DataTypes } from "sequelize";
-import { db } from "../db";
+import { DataTypes } from 'sequelize';
+import { db } from '../../db';
 
-export const UserModel = db.define("Users", {
+export const UserModel = db.define('Users', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -16,5 +15,3 @@ export const UserModel = db.define("Users", {
     allowNull: false,
   },
 });
-
-// UserModel.hasOne(ListModel);

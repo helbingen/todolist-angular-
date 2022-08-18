@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import { db } from "../db";
+import { DataTypes } from 'sequelize';
+import { db } from '../../db';
 
-export const ListModel = db.define("ToDoList", {
+export const AtividadesModel = db.define('Atividades', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

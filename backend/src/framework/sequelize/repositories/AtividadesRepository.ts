@@ -1,5 +1,5 @@
 import { Model } from 'sequelize/types';
-import { AtividadesModel } from '../models/AtividadesModel';
+import { AtividadesModel } from '../../../framework/sequelize/models/AtividadesModel';
 
 class AtividadesRepository {
   criarAtividade(
@@ -22,7 +22,7 @@ class AtividadesRepository {
     AtividadesModel.update(pBody, { where: { id: pId } });
   }
 
-  removerAtividades(pId: string): void {
+  removerAtividade(pId: string): void {
     AtividadesModel.destroy({ where: { id: pId } });
   }
 
@@ -39,7 +39,7 @@ class AtividadesRepository {
   }
 
   buscarAtividadePorId(pId: string): any {
-    AtividadesModel.findOne({
+    return AtividadesModel.findOne({
       where: {
         id: pId,
       },

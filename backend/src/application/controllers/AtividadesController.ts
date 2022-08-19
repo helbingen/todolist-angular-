@@ -1,74 +1,100 @@
 import { Request, Response } from 'express';
-import atividadesUseCases from '../../domain/useCases/atividades.useCases';
-import AtividadesRepository from '../../framework/sequelize/repositories/AtividadesRepository';
+import atividadesUseCase from './useCases/atividadesUseCases';
 
 class AtividadesController {
   async criarAtividade(pReq: Request, pRes: Response): Promise<any> {
-    const { atividade, concluido, dataConclusao, userId } = pReq.body;
-    atividadesUseCases.verificaIdUndefined(userId, pRes);
-    const atividades = await AtividadesRepository.criarAtividade(
-      atividade,
-      concluido,
-      dataConclusao,
-      userId,
-    );
-    return atividades
-      ? pRes.status(201).json(atividades)
-      : pRes.status(404).send();
+    try {
+      const { atividade, concluido, dataConclusao, userId } = pReq.body;
+      if (!!userId === false) {
+        throw new Error('Id do usuário não informado.');
+      }
+      const atividades = await atividadesUseCase.criarAtividade(
+        atividade,
+        concluido,
+        dataConclusao,
+        userId,
+      );
+      return pRes.status(201).send();
+    } catch {
+      return pRes.status(400).send();
+    }
   }
 
   async editarAtividade(pReq: Request, pRes: Response): Promise<any> {
-    const { id } = pReq.params;
-    await AtividadesRepository.editarAtividade(pReq.body, id);
-    return pRes.status(204).send();
+    try {
+      const { id } = pReq.params;
+      if (!!id === false) {
+        throw new Error('Id de atividade não encontrado');
+      }
+      await atividadesUseCase.editarAtividade(pReq.body, id);
+      return pRes.status(204).send();
+    } catch {
+      return pRes.status(400);
+    }
   }
 
   async removerAtividade(pReq: Request, pRes: Response): Promise<any> {
-    const { id } = pReq.params;
-    await AtividadesRepository.removerAtividades(id);
-    return pRes.status(204).send();
+    try {
+      const { id } = pReq.params;
+      await atividadesUseCase.removerAtividade(id);
+      return pRes.status(204).send();
+    } catch {
+      return pRes.status(400);
+    }
   }
 
   async buscaAtividadePorOrdemDeCriacao(
     pReq: Request,
     pRes: Response,
   ): Promise<any> {
-    const { userId } = pReq.query;
-    const columnName = 'createdAt';
-    const orderBy = 'DESC';
-    const atividades = await AtividadesRepository.buscarAtividadesPorOrdenacao(
-      userId,
-      columnName,
-      orderBy,
-    );
-    return atividades.length > 0
-      ? pRes.status(200).json(atividades)
-      : pRes.status(204).send();
+    try {
+      const { userId } = pReq.query;
+      const columnName = 'createdAt';
+      const orderBy = 'DESC';
+      const atividades = await atividadesUseCase.buscarAtividadesPorOrdenacao(
+        userId,
+        columnName,
+        orderBy,
+      );
+      if (atividades.length > 0) {
+        return pRes.status(200).json(atividades);
+      }
+    } catch {
+      return pRes.status(204).send();
+    }
   }
 
   async buscaAtividadePorOrdemDeConclusao(
     pReq: Request,
     pRes: Response,
   ): Promise<any> {
-    const { userId } = pReq.query;
-    const columnName = 'dataConclusao';
-    const orderBy = 'DESC';
-    const atividades = await AtividadesRepository.buscarAtividadesPorOrdenacao(
-      userId,
-      columnName,
-      orderBy,
-    );
-    return atividades.length > 0
-      ? pRes.status(200).json(atividades)
-      : pRes.status(204).send();
+    try {
+      const { userId } = pReq.query;
+      const columnName = 'dataConclusao';
+      const orderBy = 'DESC';
+      const atividades = await atividadesUseCase.buscarAtividadesPorOrdenacao(
+        userId,
+        columnName,
+        orderBy,
+      );
+      if (atividades.length > 0) {
+        return pRes.status(200).json(atividades);
+      }
+    } catch {
+      return pRes.status(204).send();
+    }
   }
 
   async buscaAtividadePorId(pReq: Request, pRes: Response): Promise<any> {
-    const { id } = pReq.params;
-    const atividades = await AtividadesRepository.buscarAtividadePorId(id);
-    return atividades
-      ? pRes.status(200).json(atividades)
-      : pRes.status(204).send();
+    try {
+      const { id } = pReq.params;
+      const atividades = await atividadesUseCase.buscarAtividadePorId(id);
+      if (atividades) {
+        pRes.status(200).json(atividades);
+      }
+    } catch {
+      return pRes.status(204).send();
+    }
   }
 }
 

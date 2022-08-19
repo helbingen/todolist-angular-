@@ -1,4 +1,3 @@
-import { Model } from 'sequelize/types';
 import { UserModel } from '../models/UserModel';
 import CriptografarSenha from '../../utils/criptografarSenha';
 

@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../../db';
 
-export const AtividadesModel = db.define('Atividades', {
+export const atividadesModel = db.define('atividades', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -15,9 +15,11 @@ export const AtividadesModel = db.define('Atividades', {
   concluido: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
   dataConclusao: {
     type: DataTypes.DATE,
+    defaultValue: new Date(0),
   },
   userId: {
     type: DataTypes.INTEGER,

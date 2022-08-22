@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import userUseCases from './useCases/userUseCases';
-import CriptografarSenha from '../../framework/utils/criptografarSenha';
+import userUseCases from '../useCases/userUseCases';
+import criptografarSenha from '../../framework/utils/criptografarSenha';
 
-class UserController {
+class userController {
   async validarSenhaFrontend(pReq: Request, pRes: Response): Promise<any> {
     try {
       const { senha } = pReq.body;
-      const hash = CriptografarSenha.criptografarSenha(senha);
+      const hash = criptografarSenha.criptografarSenha(senha);
       return pRes.status(201).json(hash);
     } catch {
       throw new Error('Senha não criptografada');
@@ -19,15 +19,17 @@ class UserController {
 
       const user = await userUseCases.criarUsuario(email, senha, logado);
       return pRes.status(201).json(user);
-    } catch {
-      throw new Error('Usuário não foi criado');
+    } catch (error) {
+      throw new Error(error);
     }
   }
 
   async selecionarUsuario(pReq: Request, pRes: Response): Promise<any> {
     try {
       const { email } = pReq.query;
-      const user = await userUseCases.selecionarUsuario(email);
+      const emailString = String(email);
+
+      const user = await userUseCases.selecionarUsuario(emailString);
       if (!!user === false) {
         throw new Error('Email não encontrado');
       }
@@ -43,9 +45,11 @@ class UserController {
   async selecionarUsuarioLogado(pReq: Request, pRes: Response): Promise<any> {
     try {
       const user = await userUseCases.selecionarUsuarioLogado();
-      if (user) {
-        return pRes.status(200).json(user);
+      if (!!user === false) {
+        //validação de valor falsify, mesma coisa de user === null
+        return pRes.status(404).send('Não existe usuário logado');
       }
+      return pRes.status(200).json(user);
     } catch {
       return pRes.status(404).send();
     }
@@ -54,23 +58,22 @@ class UserController {
   async login(pReq: Request, pRes: Response): Promise<any> {
     try {
       const { email } = pReq.query;
-      await userUseCases.login(pReq.body, email);
+      const emailString = String(email);
+      await userUseCases.login(pReq.body, emailString);
       return pRes.status(204).send();
     } catch {
       throw new Error('Não foi possível realizar login');
     }
-    // return logado ? pRes.status(200).json({ logado }) : pRes.status(404);
   }
 
   async atualizarUsuarioLogado(pReq: Request, pRes: Response): Promise<any> {
     try {
-      await userUseCases.atualizarUsuarioLogado(pReq.body);
-      return pRes.status(204).send();
+      const users = await userUseCases.atualizarUsuarioLogado(pReq.body);
+      return pRes.status(204).json(users);
     } catch {
       return pRes.status(404).send();
     }
-    // return logado ? pRes.status(200).json(logado) : pRes.status(404);
   }
 }
 
-export default new UserController();
+export default new userController();

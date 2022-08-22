@@ -1,50 +1,50 @@
+import { atividadesModel } from '../models/atividadesModel';
 import { Model } from 'sequelize/types';
-import { AtividadesModel } from '../../../framework/sequelize/models/AtividadesModel';
 
-class AtividadesRepository {
-  criarAtividade(
-    pAtividade: string,
-    pConcluido: boolean,
-    pDataConclusao: Date,
-    pUserId: Number,
-  ): any {
-    let atividades = AtividadesModel.create({
+class atividadesRepository {
+  async criarAtividade(pAtividade: string, pUserId: Number): Promise<any> {
+    const atividades = await atividadesModel.create({
       atividade: pAtividade,
-      concluido: pConcluido,
-      dataConclusao: pDataConclusao,
       userId: pUserId,
     });
     return atividades;
   }
 
-  editarAtividade(pBody: any, pId: string): void {
-    // aqui o ID é string porque é um parametro da URL
-    AtividadesModel.update(pBody, { where: { id: pId } });
+  async editarAtividade(pBody: any, pId: number): Promise<any> {
+    const [qtdRegistros, registros] = await atividadesModel.update(pBody, {
+      where: { id: pId },
+      returning: true,
+    });
+    return registros;
   }
 
-  removerAtividade(pId: string): void {
-    AtividadesModel.destroy({ where: { id: pId } });
+  async removerAtividade(pId: number): Promise<any> {
+    const atividades = await atividadesModel.destroy({
+      where: { id: pId },
+    });
+    return atividades;
   }
 
-  buscarAtividadesPorOrdenacao(
-    pUserId: any,
+  async buscarAtividadesPorOrdenacao(
+    pUserId: number,
     pOrderParams1: string,
     pOrderParams2: string,
   ): Promise<Model<any, any>[]> {
-    let atividades = AtividadesModel.findAll({
+    const atividades = await atividadesModel.findAll({
       order: [[pOrderParams1, pOrderParams2]],
       where: { userId: pUserId },
     });
     return atividades;
   }
 
-  buscarAtividadePorId(pId: string): any {
-    return AtividadesModel.findOne({
+  async buscarAtividadePorId(pId: number): Promise<any> {
+    const atividades = await atividadesModel.findOne({
       where: {
         id: pId,
       },
     });
+    return atividades;
   }
 }
 
-export default new AtividadesRepository();
+export default new atividadesRepository();

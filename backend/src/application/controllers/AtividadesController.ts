@@ -1,20 +1,18 @@
 import { Request, Response } from 'express';
-import atividadesUseCase from './useCases/atividadesUseCases';
+import atividadesUseCases from '../useCases/atividadesUseCases';
 
-class AtividadesController {
+class atividadesController {
   async criarAtividade(pReq: Request, pRes: Response): Promise<any> {
     try {
-      const { atividade, concluido, dataConclusao, userId } = pReq.body;
+      const { atividade, userId } = pReq.body;
       if (!!userId === false) {
         throw new Error('Id do usuário não informado.');
       }
-      const atividades = await atividadesUseCase.criarAtividade(
+      const atividades = await atividadesUseCases.criarAtividade(
         atividade,
-        concluido,
-        dataConclusao,
         userId,
       );
-      return pRes.status(201).send();
+      return pRes.status(201).json(atividades);
     } catch {
       return pRes.status(400).send();
     }
@@ -23,10 +21,11 @@ class AtividadesController {
   async editarAtividade(pReq: Request, pRes: Response): Promise<any> {
     try {
       const { id } = pReq.params;
+      const idNumber = Number(id);
       if (!!id === false) {
         throw new Error('Id de atividade não encontrado');
       }
-      await atividadesUseCase.editarAtividade(pReq.body, id);
+      await atividadesUseCases.editarAtividade(pReq.body, idNumber);
       return pRes.status(204).send();
     } catch {
       return pRes.status(400);
@@ -36,7 +35,8 @@ class AtividadesController {
   async removerAtividade(pReq: Request, pRes: Response): Promise<any> {
     try {
       const { id } = pReq.params;
-      await atividadesUseCase.removerAtividade(id);
+      const idNumber = Number(id);
+      await atividadesUseCases.removerAtividade(idNumber);
       return pRes.status(204).send();
     } catch {
       return pRes.status(400);
@@ -49,10 +49,11 @@ class AtividadesController {
   ): Promise<any> {
     try {
       const { userId } = pReq.query;
+      const userIdNumber = Number(userId);
       const columnName = 'createdAt';
       const orderBy = 'DESC';
-      const atividades = await atividadesUseCase.buscarAtividadesPorOrdenacao(
-        userId,
+      const atividades = await atividadesUseCases.buscarAtividadesPorOrdenacao(
+        userIdNumber,
         columnName,
         orderBy,
       );
@@ -70,10 +71,11 @@ class AtividadesController {
   ): Promise<any> {
     try {
       const { userId } = pReq.query;
+      const userIdNumber = Number(userId);
       const columnName = 'dataConclusao';
       const orderBy = 'DESC';
-      const atividades = await atividadesUseCase.buscarAtividadesPorOrdenacao(
-        userId,
+      const atividades = await atividadesUseCases.buscarAtividadesPorOrdenacao(
+        userIdNumber,
         columnName,
         orderBy,
       );
@@ -88,9 +90,12 @@ class AtividadesController {
   async buscaAtividadePorId(pReq: Request, pRes: Response): Promise<any> {
     try {
       const { id } = pReq.params;
-      const atividades = await atividadesUseCase.buscarAtividadePorId(id);
+      const idNumber = Number(id);
+      const atividades = await atividadesUseCases.buscarAtividadePorId(
+        idNumber,
+      );
       if (atividades) {
-        pRes.status(200).json(atividades);
+        return pRes.status(200).json(atividades);
       }
     } catch {
       return pRes.status(204).send();
@@ -98,4 +103,4 @@ class AtividadesController {
   }
 }
 
-export default new AtividadesController();
+export default new atividadesController();

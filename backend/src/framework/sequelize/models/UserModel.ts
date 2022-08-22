@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../../db';
 
-export const UserModel = db.define('Users', {
+export const userModel = db.define('users', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -13,5 +13,6 @@ export const UserModel = db.define('Users', {
   logado: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
 });

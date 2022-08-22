@@ -1,24 +1,24 @@
 import express from 'express';
-import AtividadesController from '../../application/controllers/AtividadesController';
+import atividadesController from '../../application/controllers/atividadesController';
 
 const atividadesRoutes = express.Router();
-atividadesRoutes.post('/atividades/criar', AtividadesController.criarAtividade);
+atividadesRoutes.post('/atividades/criar', atividadesController.criarAtividade);
 atividadesRoutes.get(
   '/atividades/abertas',
-  AtividadesController.buscaAtividadePorOrdemDeCriacao,
+  atividadesController.buscaAtividadePorOrdemDeCriacao,
 );
 atividadesRoutes.get(
   '/atividades/concluidas',
-  AtividadesController.buscaAtividadePorOrdemDeConclusao,
+  atividadesController.buscaAtividadePorOrdemDeConclusao,
 );
 atividadesRoutes.get(
   '/atividades/:id',
-  AtividadesController.buscaAtividadePorId,
+  atividadesController.buscaAtividadePorId,
 );
-atividadesRoutes.put('/atividades/:id', AtividadesController.editarAtividade);
+atividadesRoutes.put('/atividades/:id', atividadesController.editarAtividade);
 atividadesRoutes.delete(
   '/atividades/:id',
-  AtividadesController.removerAtividade,
+  atividadesController.removerAtividade,
 );
 
 export { atividadesRoutes };

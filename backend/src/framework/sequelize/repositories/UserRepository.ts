@@ -1,38 +1,46 @@
-import { UserModel } from '../models/UserModel';
-import CriptografarSenha from '../../utils/criptografarSenha';
+import { userModel } from '../models/userModel';
+import criptografarSenha from '../../utils/criptografarSenha';
 
-class UserRepository {
-  criarUsuario(pEmail: string, pSenha: string, pLogado: boolean): void {
-    UserModel.create({
+class userRepository {
+  async criarUsuario(
+    pEmail: string,
+    pSenha: string,
+    pLogado: boolean,
+  ): Promise<any> {
+    const users = await userModel.create({
       email: pEmail,
-      senha: CriptografarSenha.criptografarSenha(pSenha),
+      senha: criptografarSenha.criptografarSenha(pSenha),
       logado: pLogado,
     });
+    return users;
   }
 
-  selecionarUsuario(pEmail: any): any {
-    let user = UserModel.findOne({
+  async selecionarUsuario(pEmail: string): Promise<any> {
+    const users = await userModel.findOne({
       where: { email: pEmail },
     });
-    return user;
+    return users;
   }
 
-  selecionarUsuarioLogado(): any {
-    let user = UserModel.findOne({
+  async selecionarUsuarioLogado(): Promise<any> {
+    const users = await userModel.findOne({
       where: { logado: true },
     });
-    return user;
+    return users;
   }
 
-  login(pBody: any, pEmail: any): any {
-    let logado = UserModel.update(pBody, { where: { email: pEmail } });
+  async login(pBody: any, pEmail: string): Promise<any> {
+    const logado = await userModel.update(pBody, { where: { email: pEmail } });
     return logado;
   }
 
-  atualizarUsuarioLogado(pBody: any): any {
-    let user = UserModel.update(pBody, { where: { logado: true } });
-    return user;
+  async atualizarUsuarioLogado(pBody: any): Promise<any> {
+    const [qtdRegistro, registro] = await userModel.update(pBody, {
+      where: { logado: true },
+      returning: true,
+    });
+    return registro;
   }
 }
 
-export default new UserRepository();
+export default new userRepository();

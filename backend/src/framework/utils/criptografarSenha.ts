@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-class CriptografarSenha {
+class criptografarSenha {
   criptografarSenha(pSenha: string): string {
     const secret = 'Hi';
     var hash = crypto.createHash('sha256', secret).update(pSenha).digest('hex');
@@ -8,4 +8,4 @@ class CriptografarSenha {
   }
 }
 
-export default new CriptografarSenha();
+export default new criptografarSenha();
